@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <!--https://picnicss.com/-->
+    <link rel="stylesheet" href="https://unpkg.com/picnic">
+    <link rel="stylesheet" href="jo.css"/>
+
+    <title>Just One</title>
+  </head>
+  <body>
+
+    <div class="room-form middle-screen-container">
+      <input class="name-input middle-screen stack" placeholder="name" />
+      <button class="room-button middle-screen stack">Go!</button>
+    </div>
+
+    <div class="waiting-room middle-screen-container">
+      <div>Waiting for all players...</div>
+      <button class="start-button middle-screen">Start Game</button>
+    </div>
+
+    <div class="write-screen middle-screen-container">
+      <div class="secret-word-text">The secret word is BLAH</div>
+      <input class="write-input middle-screen stack" placeholder="..." />
+      <button class="write-done-button middle-screen stack">Done</button>
+    </div>
+
+
+    <!-- load scripts -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    <script type="text/javascript" src="jo.js"></script>
+
+
+  </body>
+</html>

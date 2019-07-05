@@ -1,0 +1,15 @@
+{
+  "name": "bpt",
+  "version": "1.0.0",
+  "description": "Broken Picture Telephone server and mobile client",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --inspect index.js"
+  },
+  "author": "Calvin LeVally",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4",
+    "ws": "^7.0.0"
+  }
+}

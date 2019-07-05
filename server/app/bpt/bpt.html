@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <!--https://picnicss.com/-->
+    <link rel="stylesheet" href="https://unpkg.com/picnic">
+    <link rel="stylesheet" href="bpt.css"/>
+
+    <title>Broken Picture Telephone</title>
+  </head>
+  <body>
+
+    <div class="room-form middle-screen-container">
+      <input class="name-input middle-screen stack" placeholder="name" />
+      <button class="room-button middle-screen stack">Go!</button>
+    </div>
+
+    <div class="waiting-room middle-screen-container">
+      <div>Waiting for all players to join...</div>
+      <button class="start-button middle-screen">Start Game</button>
+    </div>
+
+    <div class="write-round middle-screen-container">
+      <input class="write-input middle-screen stack" placeholder="..." />
+      <button class="write-done-button middle-screen stack">Done</button>
+    </div>
+
+    <div class="draw-round middle-screen-container">
+      <canvas id="draw-canvas" width="750" height="750"></canvas>
+      <button class="draw-done-button middle-screen">Done</button>
+    </div>
+
+
+    <!-- load scripts -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    <script type="text/javascript" src="bpt.js"></script>
+
+
+  </body>
+</html>
