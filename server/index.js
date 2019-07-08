@@ -82,7 +82,7 @@ wss.on('connection', ws => {
 
     let message = JSON.parse(messageData);
     let gameType = message.gameType;
-    console.log('message', message);
+    //console.log('message', message);
     
     if (message.messageType == 'JOIN_ROOM') {
       joinServer(ws, message);
@@ -266,7 +266,13 @@ function joHandler(socket, message) {
       joRoundStarted(message);
       break;
     case 'WORD_SUBMITTED':
-      joWordSubmitted(socket, message);
+      joWordSubmitted(message);
+      break;
+    case 'READY_TO_GUESS':
+      joReadyToGuess(message);
+      break;
+    case 'GUESS':
+      joGuessSubmitted(message);
       break;
   }
 }
@@ -298,9 +304,27 @@ function joRoundStarted(message) {
 }
 
 
-function joWordSubmitted(socket, message) {
+function joWordSubmitted(message) {
   if (bigScreenSocket != undefined) {
     let wordSubmittedObject = { messageType: "WORD_SUBMITTED", name: message.name, word: message.word };
     bigScreenSocket.send(JSON.stringify(wordSubmittedObject));
+  }
+}
+
+function joReadyToGuess(message) {
+  let guessingPlayer = message.player;
+  for (let i = 0; i < players.length; i++) {
+    if (players[i].name == guessingPlayer) {
+      let jsonObject = { messageType: "READY_TO_GUESS" };
+      players[i].send(JSON.stringify(jsonObject));
+      break;
+    }
+  }
+}
+
+function joGuessSubmitted(message) {
+  if (bigScreenSocket != undefined) {
+    let guessSubmittedObject = { messageType: "GUESS", word: message.word };
+    bigScreenSocket.send(JSON.stringify(guessSubmittedObject));
   }
 }

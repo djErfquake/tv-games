@@ -51,11 +51,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
-  m_Name: CalvinsHandwriting-Regular
+  m_Name: CalvinsHandwriting-Regular-White
   m_EditorClassIdentifier: 
-  hashCode: 0
+  hashCode: -182283926
   material: {fileID: -4781646408384315000}
-  materialHashCode: 0
+  materialHashCode: -2138309205
   m_Version: 1.1.0
   m_SourceFontFileGUID: 497e0fb0b15ce0743a4b3edd8d7a9106
   m_SourceFontFile_EditorRef: {fileID: 0}
@@ -2066,6 +2066,7 @@ MonoBehaviour:
     kerningPairs: []
   m_FontFeatureTable:
     m_GlyphPairAdjustmentRecords: []
+  fallbackFontAssets: []
   m_FallbackFontAssetTable: []
   m_CreationSettings:
     sourceFontFileName: 

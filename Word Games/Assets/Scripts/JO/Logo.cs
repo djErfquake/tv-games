@@ -35,6 +35,7 @@ namespace JO
                 hoverTween = logoImage.rectTransform.DOScale(Vector2.one, 5f).SetEase(Ease.Linear).SetLoops(-1, LoopType.Yoyo);
             });
 
+            instructionsText.gameObject.SetActive(true);
         }
 
         public void Hide(System.Action onComplete = null)
@@ -46,6 +47,8 @@ namespace JO
             revealTween = logoImage.rectTransform.DOScale(Vector2.zero, 0.4f).OnComplete(() => {
                 onComplete?.Invoke();
             });
+
+            instructionsText.gameObject.SetActive(false);
         }
 
 

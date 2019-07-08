@@ -25,6 +25,7 @@ $(function () {
   ];
 
   let secretWordText = $('.secret-word-text');
+  let secretWord = "";
   
 
   ws.onerror = error => {
@@ -52,6 +53,9 @@ $(function () {
         break;
       case 'START_ROUND':
         startRound(message);
+        break;
+      case 'READY_TO_GUESS':
+        readyToGuess();
         break;
     }
   }
@@ -96,10 +100,12 @@ $(function () {
   function startRound(message) {
     
     startButton.hide();
+    secretWord = "";
     
     if (message.word) {
       waitScreen.hide();
-      secretWordText.html(`The secret word is ${message.word}`);
+      secretWord = message.word;
+      secretWordText.html(`The secret word is ${secretWord}`);
       writeScreen.show();
     }
   }
@@ -112,10 +118,22 @@ $(function () {
     if (writeText != "") {
       writeScreen.hide();
       waitScreen.show();
-      let wordSubmittedObject = {gameType: 'JO', messageType: 'WORD_SUBMITTED', name: playerName, word: writeText };
-      ws.send(JSON.stringify(wordSubmittedObject));
+      if (secretWord != "") {
+        let wordSubmittedObject = {gameType: 'JO', messageType: 'WORD_SUBMITTED', name: playerName, word: writeText };
+        ws.send(JSON.stringify(wordSubmittedObject));
+      } else {
+        let guessSubmittedObject = {gameType: 'JO', messageType: 'GUESS', word: writeText };
+        ws.send(JSON.stringify(guessSubmittedObject));
+      }
     }
   });
+
+
+  function readyToGuess() {
+    waitScreen.hide();
+    secretWordText.html(`What word makes sense of these clues?`);
+    writeScreen.show();
+  }
 
   
 

@@ -16,7 +16,7 @@ public class JOPlayers : Players
         playerGo.GetComponent<RectTransform>().SetParent(transform, false);
         JoPlayer player = playerGo.GetComponent<JoPlayer>();
         player.Setup(name, color, PopPosition());
-        player.Show();
+        player.Show(0);
         players.Add(player);
     }
 
@@ -68,7 +68,7 @@ public class JOPlayers : Players
         for (int i = 0; i < players.Count; i++)
         {
             JoPlayer player = players[i] as JoPlayer;
-            player.guessedWord = string.Empty;
+            player.Reset();
         }
     }
 
@@ -97,16 +97,7 @@ public class JOPlayers : Players
             }
         }
         guesser = players[0] as JoPlayer;
-
         guesser.SetAsGuesser();
-        for (int i = 0; i < players.Count; i++)
-        {
-            if (players[i].name != guesser.name)
-            {
-                JoPlayer player = players[i] as JoPlayer;
-                player.Hide();
-            }
-        }
 
         return guesser;
     }
@@ -124,30 +115,22 @@ public class JOPlayers : Players
         List<JoPlayer> goodPlayers = new List<JoPlayer>();
         for(int i = 0; i < players.Count; i++)
         {
+            JoPlayer comparePlayerA = players[i] as JoPlayer;
+
+            bool goodPlayer = true;
             for(int j = 0; j < players.Count; j++)
             {
-                JoPlayer comparePlayerA = players[i] as JoPlayer;
                 JoPlayer comparePlayerB = players[j] as JoPlayer;
-                if (comparePlayerA.name != comparePlayerB.name &&
+                if (comparePlayerA != comparePlayerB &&
                     comparePlayerA.guessedWord == comparePlayerB.guessedWord)
                 {
+                    goodPlayer = false;
                     break;
                 }
-                goodPlayers.Add(comparePlayerA);
             }
+            if (goodPlayer) { goodPlayers.Add(comparePlayerA); }
         }
         return goodPlayers;
-    }
-
-    public void SendAllOffscreen()
-    {
-        float delay = 0;
-        for(int i = 0; i < players.Count; i++)
-        {
-            JoPlayer player = players[i] as JoPlayer;
-            player.OffScreen(delay);
-            delay += 0.3f;
-        }
     }
 
 

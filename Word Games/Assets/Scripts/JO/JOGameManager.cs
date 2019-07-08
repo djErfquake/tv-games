@@ -58,6 +58,9 @@ public class JOGameManager : GameManager
             case "WORD_SUBMITTED":
                 WordSubmitted(message);
                 break;
+            case "GUESS":
+                GuessSubmitted(message);
+                break;
         }
     }
 
@@ -69,7 +72,7 @@ public class JOGameManager : GameManager
         allPlayers.ShufflePlayers();
         guessingPlayer = allPlayers.SetNextGuesser();
 
-        guessingWord = allWords[0];
+        guessingWord = allWords[0].ToUpper();
         allWords.RemoveAt(0);
 
         JsonObject message = new JsonObject();
@@ -85,30 +88,45 @@ public class JOGameManager : GameManager
     {
         JOPlayers allPlayers = players as JOPlayers;
         JoPlayer player = allPlayers.GetPlayer(message["name"]) as JoPlayer;
-        player.guessedWord = message["word"];
-        player.Show();
+        player.guessedWord = message["word"].ToString().ToUpper();
+        player.OffScreen(0, () => {
 
-        int submittedCount = allPlayers.PlayersSubmittedCount();
-        int totalPlayers = allPlayers.PlayerCount();
-        if (allPlayers.PlayersSubmittedCount() == allPlayers.PlayerCount())
-        {
-            allPlayers.SendAllOffscreen();
-
-            // compare all words
-            List<JoPlayer> uniques = allPlayers.GetUniques();
-
-            // show off the answers
-            float delay = 0;
-            for (int i = 0; i < uniques.Count; i++)
+            int submittedCount = allPlayers.PlayersSubmittedCount();
+            int totalPlayers = allPlayers.PlayerCount();
+            if (allPlayers.PlayersSubmittedCount() == allPlayers.PlayerCount())
             {
-                JoPlayer uniquePlayer = uniques[i];
-                if (uniquePlayer.name != guessingPlayer.name)
+                // compare all words
+                List<JoPlayer> uniques = allPlayers.GetUniques();
+
+                // show off the answers
+                if (uniques.Count > 0)
                 {
-                    uniquePlayer.nameText.text = uniquePlayer.guessedWord;
-                    uniquePlayer.OnScreen(delay);
-                    delay += 0.3f;
+                    float delay = 0;
+                    for (int i = 0; i < uniques.Count; i++)
+                    {
+                        JoPlayer uniquePlayer = uniques[i];
+                        uniquePlayer.SetWord(uniquePlayer.guessedWord);
+                        uniquePlayer.Show(delay);
+                        delay += 0.3f;
+                    }
                 }
+
+                // tell guessing player we are ready for a guess
+                JsonObject rtgMessage = new JsonObject();
+                rtgMessage.Add("gameType", "JO");
+                rtgMessage.Add("messageType", "READY_TO_GUESS");
+                rtgMessage.Add("player", guessingPlayer.name);
+                server.SendMessage(rtgMessage);
             }
+        });
+    }
+
+    public void GuessSubmitted(JsonNode message)
+    {
+        string guessedWord = message["word"].ToString().ToUpper();
+        if (guessedWord == guessingWord)
+        {
+
         }
     }
 
