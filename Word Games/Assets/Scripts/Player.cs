@@ -5,13 +5,7 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    
-
-
-
-
-
-
+    public PlayerColor color;
 }
 
 [System.Serializable]

@@ -34,6 +34,8 @@ namespace JO
             image.rectTransform.anchoredPosition = originalPosition;
             image.rectTransform.localScale = Vector2.zero;
 
+            this.color = color;
+
             smallNameText.gameObject.SetActive(false);
             wordText.gameObject.SetActive(false);
         }

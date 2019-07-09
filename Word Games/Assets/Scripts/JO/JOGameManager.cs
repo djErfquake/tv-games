@@ -9,6 +9,7 @@ public class JOGameManager : GameManager
 {
     [Header("UI")]
     public Logo logo;
+    public Answer answer;
 
 
 
@@ -124,10 +125,8 @@ public class JOGameManager : GameManager
     public void GuessSubmitted(JsonNode message)
     {
         string guessedWord = message["word"].ToString().ToUpper();
-        if (guessedWord == guessingWord)
-        {
-
-        }
+        bool correct = guessedWord == guessingWord;
+        answer.Show(guessedWord, correct, guessingPlayer.color.secondaryColor);
     }
 
 

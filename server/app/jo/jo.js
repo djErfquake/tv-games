@@ -65,7 +65,7 @@ $(function () {
   $('.room-button').on('click', () => {
 
     playerName = $('.name-input').val();
-    if (playerName != "") {
+    if (playerName != "" && /^[a-zA-Z]+$/.test(playerName)) {
       let joinRoomObject = {gameType: 'JO', messageType: 'JOIN_ROOM', name: playerName};
       ws.send(JSON.stringify(joinRoomObject));
       console.log("sending", joinRoomObject);
@@ -115,7 +115,7 @@ $(function () {
   // WRITING
   $('.write-done-button').on('click', () => {
     let writeText = $('.write-input').val();
-    if (writeText != "") {
+    if (writeText != "" && /^[a-zA-Z]+$/.test(writeText)) {
       writeScreen.hide();
       waitScreen.show();
       if (secretWord != "") {
