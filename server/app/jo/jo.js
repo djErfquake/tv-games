@@ -57,6 +57,9 @@ $(function () {
       case 'READY_TO_GUESS':
         readyToGuess();
         break;
+      case 'ERROR_NAME_ALREADY_EXISTS':
+        nameExists();
+        break;
     }
   }
 
@@ -65,14 +68,21 @@ $(function () {
   $('.room-button').on('click', () => {
 
     playerName = $('.name-input').val();
-    if (playerName != "" && /^[a-zA-Z]+$/.test(playerName)) {
+    if (playerName != "") {
       let joinRoomObject = {gameType: 'JO', messageType: 'JOIN_ROOM', name: playerName};
       ws.send(JSON.stringify(joinRoomObject));
       console.log("sending", joinRoomObject);
       roomScreen.hide();
       waitScreen.show();
+      $('.name-input').val('');
     }
   });
+
+  function nameExists() {
+    playerName = "";
+    roomScreen.show();
+    waitScreen.hide();
+  }
 
 
   function setColor(message) {
@@ -121,9 +131,11 @@ $(function () {
       if (secretWord != "") {
         let wordSubmittedObject = {gameType: 'JO', messageType: 'WORD_SUBMITTED', name: playerName, word: writeText };
         ws.send(JSON.stringify(wordSubmittedObject));
+        $('.write-done-button').val('');
       } else {
         let guessSubmittedObject = {gameType: 'JO', messageType: 'GUESS', word: writeText };
         ws.send(JSON.stringify(guessSubmittedObject));
+        $('.write-done-button').val('');
       }
     }
   });

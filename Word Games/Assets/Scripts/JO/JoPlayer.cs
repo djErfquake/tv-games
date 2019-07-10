@@ -36,6 +36,7 @@ namespace JO
 
             this.color = color;
 
+            bigNameText.gameObject.SetActive(true);
             smallNameText.gameObject.SetActive(false);
             wordText.gameObject.SetActive(false);
         }
@@ -90,6 +91,16 @@ namespace JO
             revealTween.Kill();
             image.rectTransform.DOScale(guesserSize, 1.2f);
             image.rectTransform.DOAnchorPos(guessPosition, 1.2f);
+        }
+
+        public void SetAsPlayer()
+        {
+            isGuesser = false;
+            guessedWord = string.Empty;
+            
+            revealTween.Kill();
+            image.rectTransform.DOAnchorPos(originalPosition, 1.2f);
+            revealTween = image.rectTransform.DOScale(Random.Range(0.8f, 1.2f), 0.7f).SetEase(Ease.OutBack);
         }
 
         public void SetWord(string word)

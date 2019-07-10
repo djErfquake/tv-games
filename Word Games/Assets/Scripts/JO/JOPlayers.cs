@@ -99,6 +99,12 @@ public class JOPlayers : Players
         guesser = players[0] as JoPlayer;
         guesser.SetAsGuesser();
 
+        for (int i = 0; i < players.Count; i++)
+        {
+            JoPlayer player = players[i] as JoPlayer;
+            if (!player.isGuesser) { player.SetAsPlayer(); }
+        }
+
         return guesser;
     }
 
@@ -116,6 +122,7 @@ public class JOPlayers : Players
         for(int i = 0; i < players.Count; i++)
         {
             JoPlayer comparePlayerA = players[i] as JoPlayer;
+            if (comparePlayerA.isGuesser) { continue; }
 
             bool goodPlayer = true;
             for(int j = 0; j < players.Count; j++)

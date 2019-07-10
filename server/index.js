@@ -144,6 +144,14 @@ function joinServer(socket, messageData)
 
   } else {
 
+    for (let i = 0; i < players.length; i++) {
+      if (players[i].name.toUpperCase() == messageData.name.toUpperCase()) {
+        let errorNameObject = { messageType: "ERROR_NAME_ALREADY_EXISTS" };
+        socket.send(JSON.stringify(errorNameObject));
+        return;
+      }
+    }
+
     console.log(`player ${messageData.name} joined.`);
     
     // create player

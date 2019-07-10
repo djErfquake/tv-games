@@ -126,7 +126,14 @@ public class JOGameManager : GameManager
     {
         string guessedWord = message["word"].ToString().ToUpper();
         bool correct = guessedWord == guessingWord;
-        answer.Show(guessedWord, correct, guessingPlayer.color.secondaryColor);
+        answer.Show(guessedWord, correct, guessingPlayer, guessingWord, () => {
+
+            answer.Hide();
+            guessingPlayer.SetAsPlayer();
+
+            StartRound();
+
+        });
     }
 
 
