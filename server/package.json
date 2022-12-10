@@ -9,7 +9,7 @@
   "author": "Calvin LeVally",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "ws": "^7.0.0"
   }
 }
